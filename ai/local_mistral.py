@@ -12,14 +12,15 @@ def load_model():
     if _model is None or _tokenizer is None:
         print("Loading local model...")
         
-        # Configurable model selection - can be set via environment variable
-        # Default to phi-2 for lower memory usage, but can use Qwen2.5 7B for better quality
-        model_name = os.environ.get("LOCAL_MODEL_NAME", "microsoft/phi-2")
+        # Try to use Qwen2.5 7B Instruct first (as requested by user)
+        # Fall back to Phi-2 if there are memory issues
+        model_name = os.environ.get("LOCAL_MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct")
         
         if model_name == "microsoft/phi-2":
             print("Using Microsoft Phi-2 (2.7B parameters) - Low memory usage")
         elif model_name == "Qwen/Qwen2.5-7B-Instruct":
             print("Using Qwen2.5 7B Instruct - Better quality, requires ~8GB VRAM")
+            print("Note: User provided Qwen2.5 7B model file for Hugging Face")
         else:
             print(f"Using custom model: {model_name}")
         
