@@ -31,9 +31,10 @@ test_user_id = 1001
 test_key_name = "test_integration_key"
 test_key_value = "sk-or-v1-integrationtest123"
 
-# Clean up first
-if test_user_id in api_key_manager.data:
-    del api_key_manager.data[test_user_id]
+# Clean up first - use string key since data uses string keys
+user_key = str(test_user_id)
+if user_key in api_key_manager.data:
+    del api_key_manager.data[user_key]
     api_key_manager._save_data()
 
 result = api_key_manager.add_key(test_user_id, test_key_name, test_key_value, "openrouter")
@@ -74,8 +75,9 @@ print(f"   [OK] Key removal working")
 
 # Test 8: Clean up
 print("\n7. Cleaning up test data...")
-if test_user_id in api_key_manager.data:
-    del api_key_manager.data[test_user_id]
+user_key = str(test_user_id)
+if user_key in api_key_manager.data:
+    del api_key_manager.data[user_key]
     api_key_manager._save_data()
 print(f"   [OK] Test data cleaned up")
 
