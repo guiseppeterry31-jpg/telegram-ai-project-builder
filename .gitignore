@@ -2,6 +2,9 @@
 .env
 *.env
 
+# User data files
+user_api_keys.json
+
 # Python
 __pycache__/
 *.py[cod]
