@@ -11,10 +11,11 @@ def route_request(user_id, prompt, openrouter_key):
             # Fallback to OpenRouter if local model fails
             print(f"Local Mistral failed: {e}. Falling back to OpenRouter.")
             from ai.openrouter import call_openrouter
-            return call_openrouter(prompt, "mistralai/mistral-7b-instruct:free", openrouter_key)
+            return call_openrouter(prompt, "openrouter/free", openrouter_key)
     elif model_type == "openrouter_mistral":
         from ai.openrouter import call_openrouter
-        return call_openrouter(prompt, "mistralai/mistral-7b-instruct:free", openrouter_key)
+        # Use the free OpenRouter model
+        return call_openrouter(prompt, "openrouter/free", openrouter_key)
     elif model_type == "auto":
         from ai.auto_rotate import run_auto_rotate
         return run_auto_rotate(prompt, openrouter_key)

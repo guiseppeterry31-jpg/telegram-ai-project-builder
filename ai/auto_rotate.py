@@ -1,11 +1,12 @@
 from ai.openrouter import call_openrouter
 
 # Models to try in order for auto rotation (all via OpenRouter)
+# Using free models that work on OpenRouter
 AUTO_ROTATION_MODELS = [
-    "mistralai/mistral-7b-instruct:free",
-    "openchat/openchat-7b:free",
-    "nousresearch/nous-capybara-7b:free",
-    "microsoft/phi-2:free"
+    "openrouter/free",  # Free model router
+    "google/gemini-pro",  # Free tier available
+    "meta-llama/llama-3.1-8b-instruct",  # Free open source
+    "microsoft/phi-2"  # Small free model
 ]
 
 def run_auto_rotate(prompt, openrouter_key):

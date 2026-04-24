@@ -30,16 +30,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Send welcome message and model selection buttons"""
     user = update.effective_user
     keyboard = [
-        [InlineKeyboardButton("Mistral (Colab)", callback_data="model_local")],
-        [InlineKeyboardButton("Mistral (OpenRouter)", callback_data="model_openrouter")],
+        [InlineKeyboardButton("Local Model (Colab)", callback_data="model_local")],
+        [InlineKeyboardButton("GPT-3.5 Turbo (OpenRouter)", callback_data="model_openrouter")],
         [InlineKeyboardButton("Auto Mode", callback_data="model_auto")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
         f"Welcome {user.first_name}! Select a model to generate projects:\n"
-        "• Mistral (Colab): Local 4-bit quantized Mistral 7B (requires GPU)\n"
-        "• Mistral (OpenRouter): Mistral 7B via OpenRouter API\n"
-        "• Auto Mode: Automatically tries multiple models via OpenRouter",
+        "• Local Model (Colab): Small local model (may fallback to OpenRouter)\n"
+        "• GPT-3.5 Turbo (OpenRouter): Fast and reliable via OpenRouter API\n"
+        "• Auto Mode: Tries GPT-3.5, Gemini, Claude, Llama models",
         reply_markup=reply_markup
     )
 
@@ -52,10 +52,10 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if model_choice == "model_local":
         set_user_model(user_id, "local_mistral")
-        await query.edit_message_text(text="✅ Selected: Mistral (Colab). Send your project request!")
+        await query.edit_message_text(text="✅ Selected: Local Model (Colab). Send your project request!")
     elif model_choice == "model_openrouter":
         set_user_model(user_id, "openrouter_mistral")
-        await query.edit_message_text(text="✅ Selected: Mistral (OpenRouter). Send your project request!")
+        await query.edit_message_text(text="✅ Selected: GPT-3.5 Turbo (OpenRouter). Send your project request!")
     elif model_choice == "model_auto":
         set_user_model(user_id, "auto")
         await query.edit_message_text(text="✅ Selected: Auto Mode. Send your project request!")

@@ -7,13 +7,21 @@ _model = None
 _tokenizer = None
 
 def load_model():
-    """Load a smaller, more accessible model for local use"""
+    """Load a local model for use in Colab or local environment"""
     global _model, _tokenizer
     if _model is None or _tokenizer is None:
-        print("Loading local model (small, fast)...")
+        print("Loading local model...")
         
-        # Use a smaller model that's easier to download
-        model_name = "microsoft/phi-2"  # 2.7B parameters, good for local
+        # Configurable model selection - can be set via environment variable
+        # Default to phi-2 for lower memory usage, but can use Qwen2.5 7B for better quality
+        model_name = os.environ.get("LOCAL_MODEL_NAME", "microsoft/phi-2")
+        
+        if model_name == "microsoft/phi-2":
+            print("Using Microsoft Phi-2 (2.7B parameters) - Low memory usage")
+        elif model_name == "Qwen/Qwen2.5-7B-Instruct":
+            print("Using Qwen2.5 7B Instruct - Better quality, requires ~8GB VRAM")
+        else:
+            print(f"Using custom model: {model_name}")
         
         try:
             bnb_config = BitsAndBytesConfig(
